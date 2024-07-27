@@ -1328,6 +1328,7 @@ func (t *TextArea) drawPlaceholder(screen tcell.Screen, x, y, width, height int)
 		SetText(t.placeholder).
 		SetTextStyle(t.placeholderStyle)
 	textView.SetRect(x, y, width, height)
+	textView.SetWrap(t.wrap)
 	textView.Draw(screen)
 }
 
