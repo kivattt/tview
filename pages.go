@@ -279,7 +279,7 @@ func (p *Pages) Focus(delegate func(p Primitive)) {
 
 // Draw draws this primitive onto the screen.
 func (p *Pages) Draw(screen tcell.Screen) {
-	p.Box.DrawForSubclass(screen, p)
+	//p.Box.DrawForSubclass(screen, p)
 	for _, page := range p.pages {
 		if !page.Visible {
 			continue
