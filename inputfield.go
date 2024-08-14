@@ -493,6 +493,7 @@ func (i *InputField) Draw(screen tcell.Screen) {
 		lx := x + labelWidth
 		ly := y + 1
 		_, sheight := screen.Size()
+		sheight--
 /*		if ly+lheight >= sheight && ly-2 > lheight-ly {
 			ly = y - lheight
 			if ly < 0 {
