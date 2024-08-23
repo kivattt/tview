@@ -259,6 +259,8 @@ func (i *InputField) SetFormAttributes(labelWidth int, labelColor, bgColor, fiel
 
 // SetFieldWidth sets the screen width of the input area. A value of 0 means
 // extend as much as possible.
+// A value less than 0 will extend as much as possible, plus width
+// e.g. SetFieldWidth(-1) will extend as much as possible, minus 1.
 func (i *InputField) SetFieldWidth(width int) *InputField {
 	i.fieldWidth = width
 	return i
@@ -464,8 +466,8 @@ func (i *InputField) Draw(screen tcell.Screen) {
 		labelWidth = TaggedStringWidth(i.textArea.GetLabel())
 	}
 	fieldWidth := i.fieldWidth
-	if fieldWidth == 0 {
-		fieldWidth = width - labelWidth
+	if fieldWidth <= 0 {
+		fieldWidth = width - labelWidth + fieldWidth
 	}
 	i.textArea.SetRect(x, y, labelWidth+fieldWidth, 1)
 	i.textArea.setMinCursorPadding(fieldWidth-1, 1)
