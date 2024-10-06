@@ -496,12 +496,12 @@ func (i *InputField) Draw(screen tcell.Screen) {
 		ly := y + 1
 		_, sheight := screen.Size()
 		sheight--
-/*		if ly+lheight >= sheight && ly-2 > lheight-ly {
-			ly = y - lheight
-			if ly < 0 {
-				ly = 0
-			}
-		}*/
+		/*		if ly+lheight >= sheight && ly-2 > lheight-ly {
+				ly = y - lheight
+				if ly < 0 {
+					ly = 0
+				}
+			}*/
 		if ly+lheight >= sheight {
 			lheight = sheight - ly
 		}
@@ -595,7 +595,7 @@ func (i *InputField) InputHandler() func(event *tcell.EventKey, setFocus func(p 
 			i.autocompleteListMutex.Unlock() // We're still holding a lock.
 			i.Autocomplete()
 			i.autocompleteListMutex.Lock()
-		case tcell.KeyEnter, tcell.KeyEscape/*, tcell.KeyTab, tcell.KeyBacktab*/:
+		case tcell.KeyEnter, tcell.KeyEscape /*, tcell.KeyTab, tcell.KeyBacktab*/ :
 			finish(key)
 		case tcell.KeyCtrlV:
 			if i.accept != nil && !i.accept(i.textArea.getTextBeforeCursor()+i.textArea.GetClipboardText()+i.textArea.getTextAfterCursor(), 0) {
