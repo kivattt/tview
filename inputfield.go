@@ -595,7 +595,7 @@ func (i *InputField) InputHandler() func(event *tcell.EventKey, setFocus func(p 
 			i.autocompleteListMutex.Unlock() // We're still holding a lock.
 			i.Autocomplete()
 			i.autocompleteListMutex.Lock()
-		case tcell.KeyEnter, tcell.KeyEscape, tcell.KeyTab, tcell.KeyBacktab:
+		case tcell.KeyEnter, tcell.KeyEscape/*, tcell.KeyTab, tcell.KeyBacktab*/:
 			finish(key)
 		case tcell.KeyCtrlV:
 			if i.accept != nil && !i.accept(i.textArea.getTextBeforeCursor()+i.textArea.GetClipboardText()+i.textArea.getTextAfterCursor(), 0) {
