@@ -97,7 +97,7 @@ type Application struct {
 	// be forwarded).
 	inputCapture func(event *tcell.EventKey) *tcell.EventKey
 
-	dontDrawOnThisEventKey bool
+	dontDrawOnThisEventKey   bool
 	dontDrawOnThisEventMouse bool
 
 	// An optional callback function which is invoked just before the root
