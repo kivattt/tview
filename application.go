@@ -97,6 +97,9 @@ type Application struct {
 	// be forwarded).
 	inputCapture func(event *tcell.EventKey) *tcell.EventKey
 
+	dontDrawOnThisEventKey bool
+	dontDrawOnThisEventMouse bool
+
 	// An optional callback function which is invoked just before the root
 	// primitive is drawn.
 	beforeDraw func(screen tcell.Screen) bool
@@ -160,6 +163,14 @@ func NewApplication() *Application {
 func (a *Application) SetInputCapture(capture func(event *tcell.EventKey) *tcell.EventKey) *Application {
 	a.inputCapture = capture
 	return a
+}
+
+func (a *Application) DontDrawOnThisEventKey() {
+	a.dontDrawOnThisEventKey = true
+}
+
+func (a *Application) DontDrawOnThisEventMouse() {
+	a.dontDrawOnThisEventMouse = true
 }
 
 // GetInputCapture returns the function installed with SetInputCapture() or nil
@@ -391,6 +402,10 @@ EventLoop:
 				originalEvent := event
 				if inputCapture != nil {
 					event = inputCapture(event)
+					if a.dontDrawOnThisEventKey {
+						a.dontDrawOnThisEventKey = false
+						break
+					}
 					if event == nil {
 						a.draw()
 						break // Don't forward event.
@@ -462,9 +477,14 @@ EventLoop:
 				a.draw()
 			case *tcell.EventMouse:
 				consumed, isMouseDownAction := a.fireMouseActions(event)
-				if consumed {
+				if consumed && !a.dontDrawOnThisEventMouse {
 					a.draw()
 				}
+
+				if a.dontDrawOnThisEventMouse {
+					a.dontDrawOnThisEventMouse = false
+				}
+
 				a.lastMouseButtons = event.Buttons()
 				if isMouseDownAction {
 					a.mouseDownX, a.mouseDownY = event.Position()
